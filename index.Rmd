@@ -5,82 +5,46 @@ output: html_document
 
 ### Introduction
 
-An introduction of the data and a description of the trends/books/items you are choosing to analyze (and why!)
+I am using the 2017 to 2023 Seattle Public library data to analyze books by Shakespeare, as they can be easily divided into the three categories of comedy, tragedy, and history, and I am interested to see how those categories map to years and months. My guess is that comedies became more often checked out during the pandemic (who wants to read a tragedy during a national crisis?), but its possible that may be a bit skewed by the prevalence of Romeo and Juliet and Macbeth, both tragedies, both being very prevalent culturally and often read in high school English classes.
 
 ### Summary Information
 
-Write a summary paragraph of findings that includes the 5 values calculated from your summary information R script
+```{r, echo = FALSE, warning = FALSE, message = FALSE, code = readLines("summary.R")}
+```
 
-These will likely be calculated using your DPLYR skills, answering questions such as:
-
-- What is the average number of checkouts for each item?
-- What is the month or year with the most/least checkouts for a book that you're interested in?
-- What is the month or year with the most/least checkouts for ebooks?
-- How has the number of print book checkouts changed over time?
-
-Feel free to calculate and report values that you find relevant.
+To begin with, I wanted to find the months with the most and least checked out Shakespeare items from 2005 to 2023. The month with the most checkouts was in April 2016 with `r most_total_checkouts` checkouts, while the month with the least checkouts was in August 2005 with `r least_total_checkouts` checkouts. Its possible that the low number in 2005 may not be indicative of the actual number of checkouts, but instead indicative of a lower number of checkouts having been recorded at that time, as this database was only created in 2017, and relied on older data for previous years. The next information I wanted to find was the most checked out medium- my guess was that physical books would beat out any other media by a huge margin, considering how often Shakespeare's plays are used in schools, which turned out to be correct: physical books were checked out `r most_checkouts_medium` times out of the 34113 total checkouts. Continuing this thread, I wanted to find out the most checked out physical book, which ended up being Hamlet, with `r most_checkouts_book` total checkouts.
 
 ### The Dataset
 
-- Who collected/published the data?  
-- What are the parameters of the data (dates, number of checkouts, kinds of books, etc.)?
-- How was the data collected or generated?  
-- Why was the data collected?  
-- What, if any, ethical questions do you need to consider when working with this data?  
-- What are possible limitations or problems with this data?   (at least 200 words)
+The Data is collected and published by Seattle Public Library through the Seattle Open Data Portal, who, according to their website, make government data available for the following stated reasons:
+
+> Improve public understanding of City operations and other information concerning their communities.
+Generate economic opportunity for individuals and companies that benefit from the knowledge created by Open Data.
+Empower City employees to be more effective, better coordinated internally, and able to identify opportunities to better serve the public
+Encourage the development of innovative technology solutions that improve quality of life.
+
+The data from 2005 to 2017 was collected as part of an art exhibit by George Legrady that displayed checkout statistics on screen around the downtown location of SPL. After that, data was collected directly by SPL. The checkout data itself is shown anonymously, an ethical way of collecting what could be very sensitive personal data. However, its important to consider who is represented in this data: while the library offers cards to anyone who has any form of id, including shelter id cards and regardless of immigration status, the majority of books in the library are in English, which may be a limitation to anyone who cannot read English well. It also lacks data around purchased books, which could skew data around new releases that are being purchased instead of checked out.
 
 
-### First Trends Over Time Chart
+### Covid Trends Over Time Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+For the first trends over time chart, I wanted to take some information I already knew and see how it was reflected in the data. I know that Romeo and Juliet, Macbeth, and Hamlet are the three Shakespeare plays most used in English classes, and that along with that (possibly because of it), they are the most well known of Shakespeares works. I wanted to zoom into a few specific years, so I chose to compare the Covid trends of these three books. We see a lot of variance month to month, but overall the checkouts for all three books stays fairly steady each year, except for one strange (and extreme) jump taken by Hamlet and Macbeth at the end of 2021. That was still in the middle of the pandemic, so I have no idea why there would be a spike of checkouts there. Macbeths jump in checkouts could correspond to the release of a Macbeth movie in September 2021, but that wouldn't explain the near identical jump in Hamlet checkouts.
 
-The first chart that you will create and include will show the trend over time of your variable/topic/interest. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - For example, two books, or 5 different mediums
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear - legend title
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, warning = FALSE, code = readLines("chart1_example.R")}
+```{r, echo = FALSE, warning = FALSE, message = FALSE, code = readLines("school_classics_lineplot.R")}
 ```
 
-### Second Trends Over Time Chart
+### Genre Trends Over Time Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+For the second trends over time chart, I was interested in looking at genre. Shakespeares plays can be easily sorted into three categories, comedy, tragedy, and history. I added an 'other' category for poems, compilations, and other miscellaneous values. Since I had looked at only a few years, I also wanted to look at the entire timeline this time, from 2005 to 2023. While the monthly variance makes the graph somewhat difficult to read at this timescale, we can see clearly that tragedies starts fairly unpopularly in 2005, but rise to most checked out in 2012 beaten only occasionally by comedies. Histories, a section which comprises of 11 books, stays firmly in the position of least checked out over the whole timeline.
 
-The second chart that you will create and include will show another trend over time of your variable/topic/interest. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - For example, two books, or 5 different mediums
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear - legend title
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, code = readLines("chart2_example.R")}
+```{r, echo = FALSE, warning = FALSE, message = FALSE, code = readLines("genre_lineplot.R")}
 ```
 
-### Your Choice
+### Comedy and Tragedy Checkout Chart
 
-The last chart is up to you. It could be a line plot, scatter plot, histogram, bar plot, stacked bar plot, and more. Here are some requirements to help guide your design:
+For the last chart, since we knew from the second chart that comedies and tragedies are the most popular Shakespeare plays by a significant margin, I wanted to compare the checkout numbers for each book. As previously seen, Hamlet is the most checked out, followed closely by Macbeth, and then slightly less closely by Romeo and Juliet. Theres a drop, and then Midsummer Night's Dream, followed by another drop and then Othello, King Lear, and The Tempest. In a very solid last place, with under 100 checkouts, is Titus Andronicus.
 
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear legend title
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, code = readLines("chart2_example.R")}
+```{r, echo = FALSE, warning = FALSE, message = FALSE, code = readLines("book_checkouts_barchart.R")}
 ```
 
 
